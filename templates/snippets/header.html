@@ -2,28 +2,36 @@
   <a class="navbar-brand" href="/">Portfolio::<em class="warning">demo</em></a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto col-10">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Network</a>
-      </li>
-    </ul>
+    {% if request.user.is_authenticated %}
+      <ul class="navbar-nav mr-auto col-10">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Network</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a onclick="toggleDropdown()" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Lufuno &nbsp;<i class="fa fa-user"></i>
+          </a>
+        </li>
+      </ul>
+      <div id="profile" class="hide" aria-labelledby="navbarDropdown">
+        {% include 'snippets/account.html' %}
+      </div>
+    {% else%}
+    <ul class="navbar-nav mr-auto col-10"></ul>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a onclick="toggleDropdown()" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Lufuno &nbsp;<i class="fa fa-user"></i>
-
-        </a>
-
-      </li>
-
+      <li class="nav-item">
+          <a class="nav-link" href="#">Log in</a>
+        </li>
+      <li class="nav-item">
+          <a class="nav-link" href="#">Register</a>
+        </li>
     </ul>
-    <div id="profile" class="hide" aria-labelledby="navbarDropdown">
-      {% include 'snippets/account.html' %}
-
-        </div>
+    {% endif%}
   </div>
 </nav>
 
