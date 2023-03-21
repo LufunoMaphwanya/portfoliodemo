@@ -129,8 +129,6 @@ def network_view(request):
 
     return render(request, "useraccount/network.html", context)
 
-
-
 def account_view(request, slug):
 
     if not request.user.is_authenticated:
