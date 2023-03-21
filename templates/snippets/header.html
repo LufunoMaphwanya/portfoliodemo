@@ -5,11 +5,12 @@
     {% if request.user.is_authenticated %}
       <ul class="navbar-nav mr-auto col-10">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Network</a>
+          <a class="nav-link" href="{% url 'network' %}">Network</a>
         </li>
+
       </ul>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
@@ -25,10 +26,10 @@
     <ul class="navbar-nav mr-auto col-10"></ul>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-          <a class="nav-link" href="#">Log in</a>
+          <a class="nav-link" href="{% url 'login' %}">Log in</a>
         </li>
       <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
         </li>
     </ul>
     {% endif%}

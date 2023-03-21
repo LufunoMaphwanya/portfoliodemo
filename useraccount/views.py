@@ -8,6 +8,8 @@ import ipinfo
 
 from portfolio_demo import settings
 from useraccount.forms import RegistrationForm, LoginForm, UserAccountUpdateForm
+from useraccount.models import UserAccount
+
 
 def landing_page_view(request):
     return render(request, "useraccount/home.html")
@@ -105,6 +107,15 @@ def update_user_view(request):
         context['update_form'] = form
 
         return render(request, "useraccount/profile.html", context)
+
+
+def network_view(request):
+    context = {}
+
+    accounts = UserAccount.objects.all()
+    context['accounts'] = accounts
+    return render(request, "useraccount/network.html", context)
+
 
 
 

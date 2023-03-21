@@ -13,8 +13,8 @@
         <a href="{% url 'register' %}" type="button" class="btn btn-success">Create account</a>
         {% else %}
         <p>Welcome back {{ request.user}}</p>
-        <a href="{% url 'login' %}" type="button" class="btn btn-primary">My profile</a>
-        <a href="{% url 'register' %}" type="button" class="btn btn-success">Network ( map)</a>
+        <a href="{% url 'profile' %}" type="button" class="btn btn-primary">My profile</a>
+        <a href="{% url 'network' %}" type="button" class="btn btn-success">Network ( map)</a>
         {% endif %}
       </div>
     </div>
