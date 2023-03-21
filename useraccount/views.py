@@ -1,6 +1,7 @@
+import json
 import urllib
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 import urllib.request
 
@@ -113,8 +114,33 @@ def network_view(request):
     context = {}
 
     accounts = UserAccount.objects.all()
-    context['accounts'] = accounts
+    context['accounts'] = [
+        {
+            'first_name': account.first_name,
+         'last_name': account.last_name,
+         'phone_number': account.phone_number,
+         'email': account.email,
+         'username': account.username,
+         'x': account.address_x,
+          'y': account.address_y,
+          } for account in accounts]
+
     return render(request, "useraccount/network.html", context)
+
+
+
+def account_view(request, slug):
+
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    context = {}
+    account = get_object_or_404(UserAccount, username=slug)
+    context['account'] = account
+
+    return render(request, "useraccount/network_account.html", context)
+
+
 
 
 

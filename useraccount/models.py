@@ -26,8 +26,6 @@ class MyAccountManager(BaseUserManager):
         if not username:
             raise ValueError("User must have username")
 
-        # loc_data = location_data()
-
         user = self.model(
             email = self.normalize_email(email),
             username=username,
