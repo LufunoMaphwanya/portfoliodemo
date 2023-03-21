@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="container mt-50">
+    <div class="row">
+      <h3><br/>Login to portfolio network<br/><br/></h3>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in login_form %}
+              <div class="form-group">
+                  <p>{{field.label_tag}}</p>
+                  {{ field}}
+
+                  {% if field.help_text%}
+                    <small id="emailHelp" class="form-text text-muted">{{field.help_text}}</small>
+                  {% endif %}
+
+
+                  {% if field.errors%}
+                  <p>{{field.error}}</p>
+                  {% endif %}
+              </div>
+            {% endfor %}
+
+              <div class="form-group">
+                <br />
+                <button type="submit" class="btn btn-success">Log in</button>
+              </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}
