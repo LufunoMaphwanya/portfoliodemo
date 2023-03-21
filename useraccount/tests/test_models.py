@@ -45,4 +45,19 @@ class AuthorModelTest(TestCase):
 
         ua.save()
 
+    @unittest.expectedFailure
+    def test_unique_username(self):
+        i = 1
+        ua = UserAccount.objects.create(
+            email=f"useerer{i}@testmail.com",
+            username=f"username{i}",
+            first_name=f"person-{i}",
+            last_name=f"person-{i}",
+            phone_number=f"surname-{i}",
+            address_x=f"400",
+            address_y=f"-200",
+        )
+
+        ua.save()
+
 
