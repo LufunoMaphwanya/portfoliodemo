@@ -1,11 +1,12 @@
 <div class="card text-center">
   <div class="card-header">
-    Profile: Lufuno Maphwanya
+    {{ request.user}}
   </div>
   <div class="card-body">
-    <h6 class="card-text">lcmaphwanya@gmail.com</h6>
-    <h6 class="card-text">Johannesburg</h6>
-    <h6 class="card-text">ZA</h6>
+    <h6 class="card-text">{{ request.user.first_name}}</h6>
+    <h6 class="card-text">{{ request.user.last_name}}</h6>
+    <h6 class="card-text">{{ request.user.phone_number}}</h6>
+
 
     <a href="{% url 'profile' %}"class="btn btn-primary">Update profile</a>
   </div>
