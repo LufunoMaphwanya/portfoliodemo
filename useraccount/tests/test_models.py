@@ -31,8 +31,6 @@ class AuthorModelTest(TestCase):
 
     @unittest.expectedFailure
     def test_unique_email(self):
-        user = UserAccount.objects.get(id=1)
-        expected_object_name = f'{user.email}'
 
         i = 1
         ua = UserAccount.objects.create(
