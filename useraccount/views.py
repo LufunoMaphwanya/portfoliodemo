@@ -111,6 +111,8 @@ def update_user_view(request):
 
 
 def network_view(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     context = {}
 
     accounts = UserAccount.objects.all()

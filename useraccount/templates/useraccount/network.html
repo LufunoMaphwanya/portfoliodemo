@@ -9,9 +9,6 @@
     <div class="row">
       <div class="col-8">
          <div id='map' class="container" style="height:65vh;width:100%;background:lightgray">
-           {{request.user.address_x}}
-           {{request.user.address_y}}
-           {{ accounts }}
           </div>
       </div>
       <div class="col-4">
@@ -19,9 +16,10 @@
            <h6>click account to view</h6>
            <ul class="list-group">
              {% for account in accounts%}
-             <li class="list-group-item"><a href="{% url 'account' account.username %}">{{account.email}}</a></li>
+             <li class="list-group-item">
+                 <a href="{% url 'account' account.username %}">{{account.email}}</a>
+             </li>
               {% endfor%}
-
 
            </ul>
           </div>
