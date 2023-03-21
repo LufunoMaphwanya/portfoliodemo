@@ -7,7 +7,7 @@ import urllib.request
 import ipinfo
 
 from portfolio_demo import settings
-from useraccount.forms import RegistrationForm, LoginForm
+from useraccount.forms import RegistrationForm, LoginForm, UserAccountUpdateForm
 
 def landing_page_view(request):
     return render(request, "useraccount/home.html")
@@ -67,4 +67,44 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+def update_user_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    context = {}
+
+    if request.POST:
+        form = UserAccountUpdateForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            form  = UserAccountUpdateForm(initial={
+                "email": request.user.email,
+                "username": request.user.username,
+                "first_name": request.user.first_name,
+                "last_name": request.user.last_name,
+                "phone_number": request.user.phone_number,
+            })
+
+        context["update_form"] = form
+        return render(request, "useraccount/profile.html", context)
+    else:
+        form = UserAccountUpdateForm(initial={
+            "email": request.user.email,
+            "username": request.user.username,
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "phone_number": request.user.phone_number,
+        })
+
+        context['update_form'] = form
+
+        return render(request, "useraccount/profile.html", context)
+
+
 
