@@ -1,0 +1,41 @@
+# Created by https://www.gitignore.io
+
+### OSX ###
+.DS_Store
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+# C extensions
+*.so
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.manifest
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+docs/_build/
+target/
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+venv
+db.sqlite3
