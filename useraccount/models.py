@@ -1,16 +1,39 @@
 from django.db import models
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+from portfolio_demo import settings
+import urllib.request
+
+import ipinfo
+
+def location_data():
+    ipinfo_token = getattr(settings, "IPINFO_TOKEN", None)
+    ipinfo_settings = getattr(settings, "IPINFO_SETTINGS", {})
+    ip_data = ipinfo.getHandler(ipinfo_token, **ipinfo_settings)
+
+    external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+    ip_data = ip_data.getDetails(external_ip)
+
+    lat = (ip_data.details['latitude'])
+    long = (ip_data.details['longitude'])
+    return lat, long
+
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, username, password=None, phone_number=None, first_name=None, last_name=None, address_x=None, address_y=None):
         if not email:
             raise ValueError("User must have email address")
         if not username:
             raise ValueError("User must have username")
 
+        # loc_data = location_data()
+
         user = self.model(
             email = self.normalize_email(email),
             username=username,
+            phone_number=phone_number,
+            first_name=first_name,
+            last_name=last_name,
         )
 
         user.set_password(password)

@@ -1,7 +1,12 @@
+import urllib
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+import urllib.request
 
+import ipinfo
+
+from portfolio_demo import settings
 from useraccount.forms import RegistrationForm, LoginForm
 
 def landing_page_view(request):
@@ -62,3 +67,4 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+

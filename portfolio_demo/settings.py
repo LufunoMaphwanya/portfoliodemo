@@ -52,7 +52,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ipinfo_django.middleware.IPinfoMiddleware',
 ]
+
+IPINFO_TOKEN = 'a6daa9f6678a16'
+IPINFO_SETTINGS = {
+  'cache_options': {
+      'ttl':30,
+      'maxsize': 128
+  },
+}
+IPINFO_FILTER = lambda request: request.scheme == 'http'
+
 
 ROOT_URLCONF = 'portfolio_demo.urls'
 
