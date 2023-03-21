@@ -20,9 +20,7 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
 
             account = authenticate(email=email, username=email, password=raw_password)
-            # login(request, account)
-            # return "hello";
-
+            login(request, account)
             return redirect('home')
         else:
             context['registration_form'] = form
