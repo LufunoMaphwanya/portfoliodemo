@@ -3,12 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
 from useraccount.models import UserAccount
-
 from portfolio_demo import settings
+
 import urllib.request
 import ipinfo
 
 def location_data():
+    """ returns user location as: (lattitude, longitude) tupple"""
+
     ipinfo_token = getattr(settings, "IPINFO_TOKEN", None)
     ipinfo_settings = getattr(settings, "IPINFO_SETTINGS", {})
     ip_data = ipinfo.getHandler(ipinfo_token, **ipinfo_settings)
@@ -38,6 +40,8 @@ class LoginForm(forms.ModelForm):
         fields = ("email", "password")
 
     def clean(self):
+        """ validates login_form credentials"""
+
         email = self.cleaned_data["email"]
         password = self.cleaned_data["password"]
 
@@ -51,6 +55,8 @@ class UserAccountUpdateForm(forms.ModelForm):
         fields = ("email", "username", "first_name", "last_name", "phone_number")
 
     def clean_username(self):
+        """ Validates that username is unique """
+
         if self.is_valid():
             username = self.cleaned_data["username"]
             try:
@@ -59,6 +65,8 @@ class UserAccountUpdateForm(forms.ModelForm):
                 return username
             raise forms.ValidationError(f"username {username} is already is use")
     def clean_email(self):
+        """ Validates that email is unique """
+
         if self.is_valid():
             email = self.cleaned_data["email"]
             try:

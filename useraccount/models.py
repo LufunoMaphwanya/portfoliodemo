@@ -59,6 +59,10 @@ class MyAccountManager(BaseUserManager):
         return user
 
 class UserAccount(AbstractBaseUser):
+    """
+        Stores a single user-account
+        extends :model:`django.contrib.auth.models.AbstractBaseUser`
+    """
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField( max_length=30, unique=True)
     date_joined = models.DateTimeField( verbose_name="date joined", auto_now_add=True)
@@ -82,6 +86,7 @@ class UserAccount(AbstractBaseUser):
     objects = MyAccountManager()
 
     def __str__(self):
+        """returns user email to represent user account as str."""
         return f"{self.email}"
 
     def has_perm(self, perm, obj=None):

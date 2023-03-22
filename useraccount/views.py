@@ -1,21 +1,25 @@
-import json
-import urllib
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-import urllib.request
-
-import ipinfo
-
-from portfolio_demo import settings
 from useraccount.forms import RegistrationForm, LoginForm, UserAccountUpdateForm
 from useraccount.models import UserAccount
 
 
 def landing_page_view(request):
+    """
+    Return site landing page
+    :template:`useraccount/home.html`
+    """
     return render(request, "useraccount/home.html")
 
 def registration_view(request):
+    """
+    Register user.
+    **Context**
+    ``register_form``
+        register form (email, password).
+    **Template:**
+    :template:`useraccount/register.html`
+    """
     context = {}
 
     if request.POST:
@@ -41,6 +45,14 @@ def registration_view(request):
         return render(request, "useraccount/register.html", context)
 
 def login_view(request):
+    """
+    Log user in.
+    **Context**
+    ``login_form``
+        login form (email, password ).
+    **Template:**
+    :template:`useraccount/login.html`
+    """
     context = {}
     user = request.user
     if user.is_authenticated:
@@ -68,11 +80,23 @@ def login_view(request):
         return render(request, 'useraccount/login.html', context)
 
 def logout_view(request):
+    """
+    Destroys auth session`.
+    Returns redirect to guest page home.html
+    """
     logout(request)
     return redirect('home')
 
 
 def update_user_view(request):
+    """
+    Update an instance of :model:`useraccount.UserAccount`.
+    **Context**
+    ``update_form``
+        update form with data from user.id:`useraccount.UserAccount`.
+    **Template:**
+    :template:`useraccount/profile.html`
+    """
 
     if not request.user.is_authenticated:
         return redirect("login")
@@ -111,6 +135,15 @@ def update_user_view(request):
 
 
 def network_view(request):
+    """
+    Display list of :model:`useraccount.UserAccount`.
+    **Context**
+    ``accounts``
+        A list of instances:model:`useraccount.UserAccount`.
+    **Template:**
+    :template:`useraccount/network.html`
+    """
+
     if not request.user.is_authenticated:
         return redirect("login")
     context = {}
@@ -130,6 +163,14 @@ def network_view(request):
     return render(request, "useraccount/network.html", context)
 
 def account_view(request, slug):
+    """
+    Display an individual :model:`useraccount.UserAccount`.
+    **Context**
+    ``account``
+        An instance of :model:`useraccount.UserAccount`.
+    **Template:**
+    :template:`useraccount/network_account.html`
+    """
 
     if not request.user.is_authenticated:
         return redirect("login")
