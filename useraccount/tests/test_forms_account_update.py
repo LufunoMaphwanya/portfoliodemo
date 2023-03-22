@@ -59,4 +59,4 @@ class TestRegistrationForm(TestCase):
 
         assert True is ('username username1 is already is use' in str(form.errors))
         assert False is form.is_valid()
-    
+
