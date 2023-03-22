@@ -1,8 +1,8 @@
-
 from useraccount.forms import UserAccountUpdateForm
 from django.test import TestCase
 
 from useraccount.models import UserAccount
+
 
 class TestRegistrationForm(TestCase):
     @classmethod
@@ -18,7 +18,6 @@ class TestRegistrationForm(TestCase):
                 address_x=f"400",
                 address_y=f"-200",
             )
-
 
     def test_invalid_error_on_update_existing_email(self):
         form = UserAccountUpdateForm()
@@ -59,4 +58,3 @@ class TestRegistrationForm(TestCase):
 
         assert True is ('username username1 is already is use' in str(form.errors))
         assert False is form.is_valid()
-

@@ -4,11 +4,12 @@ from django.test import TestCase
 
 from useraccount.models import UserAccount
 
+
 class AuthorModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        for i in range(0,10):
+        for i in range(0, 10):
             UserAccount.objects.create(
                 email=f"user{i}@testmail.com",
                 username=f"username{i}",
@@ -31,7 +32,6 @@ class AuthorModelTest(TestCase):
 
     @unittest.expectedFailure
     def test_unique_email(self):
-
         i = 1
         ua = UserAccount.objects.create(
             email=f"user{i}@testmail.com",
@@ -59,5 +59,3 @@ class AuthorModelTest(TestCase):
         )
 
         ua.save()
-
-

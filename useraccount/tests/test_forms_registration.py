@@ -1,8 +1,8 @@
-
 from useraccount.forms import RegistrationForm
 from django.test import TestCase
 
 from useraccount.models import UserAccount
+
 
 class TestRegistrationForm(TestCase):
     @classmethod
@@ -18,6 +18,7 @@ class TestRegistrationForm(TestCase):
                 address_x=f"400",
                 address_y=f"-200",
             )
+
     def test_valid_registration_form(self):
         form = RegistrationForm()
         assert False is form.is_valid()
@@ -45,7 +46,7 @@ class TestRegistrationForm(TestCase):
                 "email": "test@gmail.com",
                 "username": "test@gmail.com",
                 "password1": "Testing123",
-                "password2": "Testing1234", # passwords do not match
+                "password2": "Testing1234",  # passwords do not match
                 "first_name": "Hello",
                 "last_name": "Hello",
                 "address_x": "-343",
@@ -55,12 +56,11 @@ class TestRegistrationForm(TestCase):
                 "password1": "Password56",
                 "password2": "Password56",
                 "first_name": "Hello",
-                "last_name": "Hello", # no email/username provided
+                "last_name": "Hello",  # no email/username provided
                 "address_x": "-343",
                 "address_y": "43"
             }
         ]
-
 
         assert False is RegistrationForm(data=invalid_registrations[0]).is_valid()
         assert False is RegistrationForm(data=invalid_registrations[1]).is_valid()
@@ -104,7 +104,7 @@ class TestRegistrationForm(TestCase):
 
         form = RegistrationForm(data=data)
 
-        assert('User account with this Username already exists.' in str(form.errors))
+        assert ('User account with this Username already exists.' in str(form.errors))
         assert False is form.is_valid()
 
     def test_invalid_registration_passwords_dont_match(self):
@@ -125,6 +125,5 @@ class TestRegistrationForm(TestCase):
 
         form = RegistrationForm(data=data)
 
-        assert('password fields didn’t match' in str(form.errors))
+        assert ('password fields didn’t match' in str(form.errors))
         assert False is form.is_valid()
-

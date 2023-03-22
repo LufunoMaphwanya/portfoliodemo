@@ -3,10 +3,10 @@ from django.urls import reverse
 
 from useraccount.models import UserAccount
 
+
 class AccountListViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-
         for i in range(0, 20):
             UserAccount.objects.create(
                 email=f"user{i}@testmail.com",
@@ -17,8 +17,8 @@ class AccountListViewTest(TestCase):
                 address_x=f"400",
                 address_y=f"-200",
             )
-    def test_redirects_to_login_protected_pages(self):
 
+    def test_redirects_to_login_protected_pages(self):
         protected_pages = ['network', 'profile']
 
         response1 = self.client.get(reverse(protected_pages[0]))
@@ -26,6 +26,5 @@ class AccountListViewTest(TestCase):
 
         self.assertEqual(
             (response1.status_code, response2.status_code),
-            (302, 302) #redirects to login
+            (302, 302)  # redirects to login
         )
-

@@ -8,6 +8,7 @@ from portfolio_demo import settings
 import urllib.request
 import ipinfo
 
+
 def location_data():
     """ returns user location as: (lattitude, longitude) tupple"""
 
@@ -22,14 +23,16 @@ def location_data():
     long = (ip_data.details['longitude'])
     return lat, long
 
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=60, help_text="Required. please provide email address")
     address_x = forms.CharField(initial=location_data()[0], widget=forms.HiddenInput())
-    address_y = forms.CharField(initial=location_data()[1],  widget=forms.HiddenInput())
+    address_y = forms.CharField(initial=location_data()[1], widget=forms.HiddenInput())
 
     class Meta:
         model = UserAccount
-        fields = ("email", "username", "password1", "password2", "phone_number", "first_name", "last_name", "address_x", "address_y")
+        fields = ("email", "username", "password1", "password2", "phone_number", "first_name", "last_name", "address_x",
+                  "address_y")
 
 
 class LoginForm(forms.ModelForm):
@@ -64,6 +67,7 @@ class UserAccountUpdateForm(forms.ModelForm):
             except UserAccount.DoesNotExist:
                 return username
             raise forms.ValidationError(f"username {username} is already is use")
+
     def clean_email(self):
         """ Validates that email is unique """
 

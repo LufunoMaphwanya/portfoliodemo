@@ -1,8 +1,8 @@
-
 from useraccount.forms import LoginForm
 from django.test import TestCase
 
 from useraccount.models import UserAccount
+
 
 class TestLoginForm(TestCase):
     @classmethod
@@ -22,4 +22,3 @@ class TestLoginForm(TestCase):
     def test_valid_login_form(self):
         form = LoginForm()
         assert False is form.is_valid()
-

@@ -49,10 +49,11 @@ def login_view(request):
     **Template:**
     :template:`useraccount/login.html`
     """
-    context = {}
     user = request.user
     if user.is_authenticated:
         return redirect("home")
+
+    context = {}
 
     if request.POST:
         form = LoginForm(request.POST)
@@ -124,7 +125,6 @@ def update_user_view(request):
         })
 
         context['update_form'] = form
-
         return render(request, "useraccount/profile.html", context)
 
 
@@ -146,12 +146,12 @@ def network_view(request):
     context['accounts'] = [
         {
             'first_name': account.first_name,
-         'last_name': account.last_name,
-         'phone_number': account.phone_number,
-         'email': account.email,
-         'username': account.username,
-         'x': account.address_x,
-          'y': account.address_y,
+            'last_name': account.last_name,
+            'phone_number': account.phone_number,
+            'email': account.email,
+            'username': account.username,
+            'x': account.address_x,
+            'y': account.address_y,
           } for account in accounts]
 
     return render(request, "useraccount/network.html", context)
