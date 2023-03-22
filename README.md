@@ -3,8 +3,8 @@ Create a portfolio app where users can register and see other users in network a
 <br>
 
 #### Prerequisites:
-1. python3<br />
-1. virtualenv or similar<br />
+- python3<br />
+- virtualenv or similar<br /><br />
 
 
 1. [Initial set up](#set-up)<br>
