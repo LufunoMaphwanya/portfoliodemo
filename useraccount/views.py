@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from useraccount.forms import RegistrationForm, LoginForm, UserAccountUpdateForm
 from useraccount.models import UserAccount
-
+from django.contrib.auth.decorators import login_required
 
 def landing_page_view(request):
     """
@@ -74,6 +74,7 @@ def login_view(request):
         context['login_form'] = LoginForm()
         return render(request, 'useraccount/login.html', context)
 
+@login_required(login_url='login')
 def logout_view(request):
     """
     Destroys auth session`.
@@ -82,7 +83,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
+@login_required(login_url='login')
 def update_user_view(request):
     """
     Update an instance of :model:`useraccount.UserAccount`.
@@ -92,10 +93,6 @@ def update_user_view(request):
     **Template:**
     :template:`useraccount/profile.html`
     """
-
-    if not request.user.is_authenticated:
-        return redirect("login")
-
     context = {}
 
     if request.POST:
@@ -128,6 +125,7 @@ def update_user_view(request):
         return render(request, "useraccount/profile.html", context)
 
 
+@login_required(login_url='login')
 def network_view(request):
     """
     Display list of :model:`useraccount.UserAccount`.
@@ -137,9 +135,6 @@ def network_view(request):
     **Template:**
     :template:`useraccount/network.html`
     """
-
-    if not request.user.is_authenticated:
-        return redirect("login")
     context = {}
 
     accounts = UserAccount.objects.all()
@@ -156,6 +151,7 @@ def network_view(request):
 
     return render(request, "useraccount/network.html", context)
 
+@login_required(login_url='login')
 def account_view(request, slug):
     """
     Display an individual :model:`useraccount.UserAccount`.
@@ -165,10 +161,6 @@ def account_view(request, slug):
     **Template:**
     :template:`useraccount/network_account.html`
     """
-
-    if not request.user.is_authenticated:
-        return redirect("login")
-
     context = {}
     account = get_object_or_404(UserAccount, username=slug)
     context['account'] = account
