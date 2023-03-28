@@ -9,9 +9,13 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import environ
 from pathlib import Path
 import os.path
+
+#initialize env variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,8 +59,7 @@ MIDDLEWARE = [
     'ipinfo_django.middleware.IPinfoMiddleware',
 ]
 
-# IPINFO_TOKEN = 'a6daa9f6678a16'
-IPINFO_TOKEN = '4953b8de6bc3a5'
+IPINFO_TOKEN = env('IP_INFO_KEY')
 IPINFO_SETTINGS = {
   'cache_options': {
       'ttl':30,
