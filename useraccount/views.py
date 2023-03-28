@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+import logging
+
+
 from useraccount.forms import RegistrationForm, LoginForm, UserAccountUpdateForm
 from useraccount.models import UserAccount
-from django.contrib.auth.decorators import login_required
+
+logger = logging.getLogger(__name__)
 
 def landing_page_view(request):
     """
@@ -22,6 +27,7 @@ def registration_view(request):
     """
     context = {}
 
+
     if request.POST:
         form = RegistrationForm(request.POST)
 
@@ -31,9 +37,14 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
 
             account = authenticate(email=email, username=email, password=raw_password)
+            logger.info(f'New user {request} logged in => {request.user}')
             login(request, account)
+
+            logger.warning(f'SUCCESSFUL log in new registration {request}')
+
             return redirect('home')
         else:
+            logger.warning(f'FAILED registration {request}')
             context['registration_form'] = form
             return render(request, "useraccount/register.html", context)
     else: #get request
@@ -66,9 +77,12 @@ def login_view(request):
 
             if user:
                 login( request, user)
+                logger.info(f'SUCCESSFUL login - {request.user} | |  {request}')
+
                 return redirect('home')
         else:
             context['login_form'] = form
+            logger.warning(f'FAILED log in |  {form}')
             return render(request, 'useraccount/login.html', context)
     else:
         context['login_form'] = LoginForm()
@@ -80,6 +94,8 @@ def logout_view(request):
     Destroys auth session`.
     Returns redirect to guest page home.html
     """
+    logger.info(f'SUCCESSFUL log out - {request.user} | |  {request}')
+
     logout(request)
     return redirect('home')
 
@@ -100,6 +116,9 @@ def update_user_view(request):
 
         if form.is_valid():
             form.save()
+
+            logger.info(f'SUCCESSFUL user update - {request.user} | |  {request}')
+
             return redirect('home')
         else:
             form = UserAccountUpdateForm(initial={
@@ -109,6 +128,8 @@ def update_user_view(request):
                 "last_name": request.user.last_name,
                 "phone_number": request.user.phone_number,
             })
+
+            logger.warning(f'FAILED user update - errors: {form.errors} | {request.user} | |  {request}')
 
         context["update_form"] = form
         return render(request, "useraccount/profile.html", context)
@@ -135,6 +156,8 @@ def network_view(request):
     **Template:**
     :template:`useraccount/network.html`
     """
+    logger.info(f'{request.user} request network view.')
+
     context = {}
 
     accounts = UserAccount.objects.all()
@@ -161,6 +184,8 @@ def account_view(request, slug):
     **Template:**
     :template:`useraccount/network_account.html`
     """
+    logger.info(f'{request.user} request network single account slug={slug}.')
+
     context = {}
     account = get_object_or_404(UserAccount, username=slug)
     context['account'] = account
