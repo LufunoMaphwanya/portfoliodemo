@@ -55,7 +55,8 @@ MIDDLEWARE = [
     'ipinfo_django.middleware.IPinfoMiddleware',
 ]
 
-IPINFO_TOKEN = 'a6daa9f6678a16'
+# IPINFO_TOKEN = 'a6daa9f6678a16'
+IPINFO_TOKEN = '4953b8de6bc3a5'
 IPINFO_SETTINGS = {
   'cache_options': {
       'ttl':30,
