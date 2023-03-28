@@ -6,6 +6,7 @@ from useraccount.models import UserAccount
 
 
 class AuthorModelTest(TestCase):
+
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
@@ -20,10 +21,21 @@ class AuthorModelTest(TestCase):
                 address_y=f"-200",
             )
 
-    def test_first_name_max_length(self):
-        author = UserAccount.objects.get(id=1)
-        max_length = author._meta.get_field('first_name').max_length
-        self.assertEqual(max_length, 100)
+    def test_first_name_label(self):
+        user = UserAccount.objects.get(id=1)
+        field_label = UserAccount._meta.get_field('first_name').verbose_name
+        self.assertEqual(field_label, 'first name')
+        self.assertEqual(user.first_name, 'person-0')
+
+    def test_object_name_is_email_address(self):
+        user = UserAccount.objects.get(id=1)
+        expected_object_name = f'{user.email}'
+        self.assertEqual(str(user), expected_object_name)
+
+    # def test_first_name_max_length(self):
+    #     user = UserAccount.objects.get(id=1)
+    #     max_length = user._meta.get_field('first_name').max_length
+    #     self.assertEqual(max_length, 100)
 
     def test_object_name_is_last_name_comma_first_name(self):
         user = UserAccount.objects.get(id=1)
@@ -59,3 +71,4 @@ class AuthorModelTest(TestCase):
         )
 
         ua.save()
+
